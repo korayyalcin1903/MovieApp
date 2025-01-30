@@ -1,6 +1,6 @@
 import React from 'react';
 
-const MovieCard = () => {
+const MovieCard = ({movie}) => {
   return (
     <>
       <div className="col-xl-4 col-md-6 mb-4">
@@ -13,10 +13,10 @@ const MovieCard = () => {
                 </h6>
                 <small className="text-muted">23,421</small>
               </div>
-              <img src="img/m1.jpg" className="card-img-top" alt="..." />
+              <img src={movie.imageUrl} className="card-img-top" alt="..." />
             </div>
             <div className="card-body p-3">
-              <h5 className="card-title text-gray-900 mb-1">Jumanji: The Next Level</h5>
+              <h5 className="card-title text-gray-900 mb-1">{movie.title}</h5>
               <p className="card-text">
                 <small className="text-muted">English</small>{' '}
                 <small className="text-danger">

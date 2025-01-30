@@ -1,9 +1,17 @@
-import React from 'react'
+import React, { useEffect, useState } from 'react'
 import MainLayout from '../../Layouts/MainLayout'
 import CastCard from './CastCard'
 import { Link } from 'react-router'
 
 const Cast = () => {
+  const [casts, setCasts] = useState([])
+
+  useEffect(() => {
+    fetch("https://localhost:7265/api/Cast")
+      .then(response => response.json())
+      .then(data => setCasts(data))
+  },[casts])
+
 return (
 <MainLayout>
   <div class="container-fluid">
@@ -17,7 +25,13 @@ return (
     <div class="row">
       <div class="col-xl-12 col-lg-12">
         <div class="row">
-          <CastCard />
+          {
+            (
+              casts.map((cast) => (
+                <CastCard cast={cast} key={cast.id}/>
+              ))
+            )
+          }
         </div>
       </div>
     </div>

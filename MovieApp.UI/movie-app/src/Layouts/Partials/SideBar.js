@@ -12,7 +12,7 @@ return (
             <div className="sidebar-brand-text mx-3"><img src="img/logo.png" alt=""/></div>
         </NavLink>
 
-        <li className="nav-item active">
+        <li className="nav-item">
             <NavLink className="nav-link" to="/">
                 <i className="fas fa-fw fa-film"></i>
                 <span>Movies</span></NavLink>

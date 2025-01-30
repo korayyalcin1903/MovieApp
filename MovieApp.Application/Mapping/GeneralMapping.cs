@@ -34,8 +34,8 @@ namespace MovieApp.Application.Mapping
 
             // Movie Command
             CreateMap<CreateMovieCommand, Movie>().ReverseMap();
-            CreateMap<UpdateCategoryCommand, Movie>().ReverseMap();
-            CreateMap<RemoveCategoryCommand, Movie>().ReverseMap();
+            CreateMap<UpdateMovieCommand, Movie>().ReverseMap();
+            CreateMap<RemoveMovieCommand, Movie>().ReverseMap();
 
 
             // Category

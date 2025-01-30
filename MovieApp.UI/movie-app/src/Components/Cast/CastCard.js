@@ -1,6 +1,6 @@
 import React from 'react';
 
-const CastCard = () => {
+const CastCard = ({cast}) => {
   return (
     <>
       <div className="col-xl-4 col-md-6 mb-4">
@@ -8,22 +8,13 @@ const CastCard = () => {
           <a href="people-detail.html">
             <div className="row no-gutters">
               <div className="col-md-4">
-                <img src="img/p1.jpg" className="card-img" alt="..." />
+                <img src={cast.imgUrl} className="card-img" style={{height: "200px"}} alt="..." />
               </div>
               <div className="col-md-8">
                 <div className="card-body">
-                  <h5 className="card-title text-gray-900">Carla Gugino</h5>
+                  <h5 className="card-title text-gray-900">{cast.fullName}</h5>
                   <p className="card-text">
-                    Carla was born in Sarasota, Florida. Moved with her mother to Paradise,
-                    California, when Carla was just five years old...
-                  </p>
-                  <p className="card-text">
-                    <small>
-                      <span className="text-muted pr-2">
-                        <i className="fas fa-film fa-sm ml-1"></i> Acting
-                      </span>{' '}
-                      <span className="text-link">Batman v Superman: Dawn of Justice (2016)</span>
-                    </small>
+                    {cast.biography.length > 100 ? `${cast.biography.slice(0, 100)}...` : cast.biography}
                   </p>
                 </div>
               </div>
