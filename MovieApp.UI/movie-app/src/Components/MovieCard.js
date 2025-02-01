@@ -5,7 +5,7 @@ const MovieCard = ({movie}) => {
     <>
       <div className="col-xl-4 col-md-6 mb-4">
         <div className="card m-card shadow border-0">
-          <a href="movies-detail.html">
+          <a href={`/movie/${movie.id}`}>
             <div className="m-card-cover">
               <div className="position-absolute bg-white shadow-sm rounded text-center p-2 m-2 love-box">
                 <h6 className="text-gray-900 mb-0 font-weight-bold">

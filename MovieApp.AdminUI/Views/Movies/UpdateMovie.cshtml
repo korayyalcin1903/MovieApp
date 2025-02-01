@@ -1,0 +1,80 @@
+﻿@model UpdateMovieDto
+
+@{
+    ViewData["Title"] = "UpdateMovie";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<div class="chart-box">
+    <h4>Movie Update</h4>
+    <input type="text" class="form-control" value="@Model.Id" asp-for="Id" readonly />
+    @if (!ViewData.ModelState.IsValid)
+    {
+        <div class="alert alert-danger" role="alert">
+            <strong>Hata!</strong> Lütfen aşağıdaki hataları düzeltin:
+            <ul>
+                @foreach (var error in ViewData.ModelState.Values.SelectMany(v => v.Errors))
+                {
+                    <li>@error.ErrorMessage</li>
+                }
+            </ul>
+        </div>
+    }
+
+    <div class="row">
+        <form method="post">
+            <div class="col-md-6">
+                <div class="form-group has-feedback">
+                    <label class="control-label">Title</label>
+                    <input type="text" class="form-control" asp-for="Title" placeholder="Title">
+                </div>
+            </div>
+            <div class="col-md-6">
+                <div class="form-group has-feedback">
+                    <label class="control-label">Director</label>
+                    <input type="text" class="form-control" asp-for="Director" placeholder="Director">
+                </div>
+            </div>
+            <div class="col-md-6">
+                <div class="form-group has-feedback">
+                    <label class="control-label">Budget</label>
+                    <input type="number" class="form-control" asp-for="Budget" placeholder="Budget">
+                </div>
+            </div>
+            <div class="col-md-6">
+                <div class="form-group has-feedback">
+                    <label class="control-label">Image Url</label>
+                    <input type="text" class="form-control" asp-for="ImageUrl" placeholder="Image Url">
+                </div>
+            </div>
+            <div class="col-md-6">
+                <div class="form-group has-feedback">
+                    <label class="control-label">Background Image Url</label>
+                    <input type="text" class="form-control" asp-for="BgImage" placeholder="Background Image Url">
+                </div>
+            </div>
+            <div class="col-md-6">
+                <label class="control-label">Category</label>
+                <select class="form-control" asp-for="CategoryId" name="CategoryId">
+                    @foreach (var category in ViewBag.Categories)
+                    {
+                        <option value="@category.Id" class="my-2">@category.CategoryName</option>
+                    }
+                </select>
+            </div>
+            <div class="col-md-6">
+                <img src="@Model.ImageUrl" style="width:80px; height:80px" />
+            </div>
+            <div class="col-md-12">
+                <div class="form-group has-feedback">
+                    <label class="control-label">Description</label>
+                    <textarea class="form-control" id="placeTextarea" rows="3" asp-for="Description" placeholder="Description"></textarea>
+                </div>
+            </div>
+            <div class="col-md-12">
+                <button type="submit" class="btn btn-default">Submit</button>
+            </div>
+        </form>
+    </div>
+</div>
+

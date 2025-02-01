@@ -9,5 +9,6 @@ namespace MovieApp.Application.Interfaces
 {
     public interface ICommentRepository: IGenericRepository<Comment>
     {
+        Task<List<Comment>> GetCommentsByMovieId(string id);
     }
 }

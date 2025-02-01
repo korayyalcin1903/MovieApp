@@ -48,5 +48,17 @@ namespace MovieApp.WebApi.Controllers
         {
             return Ok(await _mediator.Send(command));
         }
+
+        [HttpPost("AddMovie")]
+        public async Task<IActionResult> AddMovie(AddCastToMovieCommand command)
+        {
+            return Ok(await _mediator.Send(command));
+        }
+
+        [HttpGet("GetCastByMovieId/{id}")]
+        public async Task<IActionResult> GetCastByMovieId(string id)
+        {
+            return Ok(await _mediator.Send(new CastWithMovieQuery { Id = id }));
+        }
     }
 }

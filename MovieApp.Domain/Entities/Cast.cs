@@ -15,6 +15,6 @@ namespace MovieApp.Domain.Entities
         public string? Country { get; set; }
         public bool Gender { get; set; } = true;
         public DateTime? DateOfBirth { get; set; }
-        public List<Movie> Movies { get; set; }
+        public List<MovieCast> MovieCasts { get; set; } = new();
     }
 }

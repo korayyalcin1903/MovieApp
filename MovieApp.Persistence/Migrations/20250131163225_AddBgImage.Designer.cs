@@ -12,8 +12,8 @@ using MovieApp.Persistence.Context;
 namespace MovieApp.Persistence.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20250128160447_AddImageUrl")]
-    partial class AddImageUrl
+    [Migration("20250131163225_AddBgImage")]
+    partial class AddBgImage
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -24,21 +24,6 @@ namespace MovieApp.Persistence.Migrations
                 .HasAnnotation("Relational:MaxIdentifierLength", 128);
 
             SqlServerModelBuilderExtensions.UseIdentityColumns(modelBuilder);
-
-            modelBuilder.Entity("CastMovie", b =>
-                {
-                    b.Property<Guid>("CastsId")
-                        .HasColumnType("uniqueidentifier");
-
-                    b.Property<Guid>("MoviesId")
-                        .HasColumnType("uniqueidentifier");
-
-                    b.HasKey("CastsId", "MoviesId");
-
-                    b.HasIndex("MoviesId");
-
-                    b.ToTable("CastMovie");
-                });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<string>", b =>
                 {
@@ -170,6 +155,9 @@ namespace MovieApp.Persistence.Migrations
                     b.Property<bool>("Gender")
                         .HasColumnType("bit");
 
+                    b.Property<string>("ImgUrl")
+                        .HasColumnType("nvarchar(max)");
+
                     b.HasKey("Id");
 
                     b.ToTable("Casts");
@@ -232,6 +220,9 @@ namespace MovieApp.Persistence.Migrations
                         .ValueGeneratedOnAdd()
                         .HasColumnType("uniqueidentifier");
 
+                    b.Property<string>("BgImage")
+                        .HasColumnType("nvarchar(max)");
+
                     b.Property<decimal?>("Budget")
                         .HasColumnType("decimal(18,2)");
 
@@ -258,6 +249,30 @@ namespace MovieApp.Persistence.Migrations
                     b.HasIndex("CategoryId");
 
                     b.ToTable("Movies");
+                });
+
+            modelBuilder.Entity("MovieApp.Domain.Entities.MovieCast", b =>
+                {
+                    b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<Guid>("CastId")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<DateTime>("CreatedDate")
+                        .HasColumnType("datetime2");
+
+                    b.Property<Guid>("MovieId")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("CastId");
+
+                    b.HasIndex("MovieId");
+
+                    b.ToTable("MovieCasts");
                 });
 
             modelBuilder.Entity("MovieApp.Domain.Entities.Role", b =>
@@ -383,21 +398,6 @@ namespace MovieApp.Persistence.Migrations
                     b.ToTable("WatchLists");
                 });
 
-            modelBuilder.Entity("CastMovie", b =>
-                {
-                    b.HasOne("MovieApp.Domain.Entities.Cast", null)
-                        .WithMany()
-                        .HasForeignKey("CastsId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.HasOne("MovieApp.Domain.Entities.Movie", null)
-                        .WithMany()
-                        .HasForeignKey("MoviesId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-                });
-
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<string>", b =>
                 {
                     b.HasOne("MovieApp.Domain.Entities.Role", null)
@@ -471,6 +471,25 @@ namespace MovieApp.Persistence.Migrations
                     b.Navigation("Category");
                 });
 
+            modelBuilder.Entity("MovieApp.Domain.Entities.MovieCast", b =>
+                {
+                    b.HasOne("MovieApp.Domain.Entities.Cast", "Cast")
+                        .WithMany("MovieCasts")
+                        .HasForeignKey("CastId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("MovieApp.Domain.Entities.Movie", "Movie")
+                        .WithMany("MovieCasts")
+                        .HasForeignKey("MovieId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Cast");
+
+                    b.Navigation("Movie");
+                });
+
             modelBuilder.Entity("MovieApp.Domain.Entities.WatchList", b =>
                 {
                     b.HasOne("MovieApp.Domain.Entities.Movie", "Movie")
@@ -490,6 +509,11 @@ namespace MovieApp.Persistence.Migrations
                     b.Navigation("User");
                 });
 
+            modelBuilder.Entity("MovieApp.Domain.Entities.Cast", b =>
+                {
+                    b.Navigation("MovieCasts");
+                });
+
             modelBuilder.Entity("MovieApp.Domain.Entities.Category", b =>
                 {
                     b.Navigation("Movies");
@@ -498,6 +522,8 @@ namespace MovieApp.Persistence.Migrations
             modelBuilder.Entity("MovieApp.Domain.Entities.Movie", b =>
                 {
                     b.Navigation("Comments");
+
+                    b.Navigation("MovieCasts");
                 });
 #pragma warning restore 612, 618
         }

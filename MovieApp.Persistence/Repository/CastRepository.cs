@@ -1,4 +1,7 @@
-﻿using MovieApp.Application.Interfaces;
+﻿using AutoMapper;
+using Microsoft.EntityFrameworkCore;
+using MovieApp.Application.Dtos.CastDtos;
+using MovieApp.Application.Interfaces;
 using MovieApp.Domain.Entities;
 using MovieApp.Persistence.Context;
 using System;

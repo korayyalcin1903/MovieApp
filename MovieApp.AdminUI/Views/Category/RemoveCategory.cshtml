@@ -1,0 +1,19 @@
+﻿@model GetByIdCategoryDto
+
+@{
+    ViewData["Title"] = "RemoveCategory";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<div class="container">
+    <h2>Remove Category</h2>
+    <h4>#@Model.Id - @Model.CategoryName silmek istediğinizden emin misiniz?</h4>
+    <div class="d-inline-flex gap-2">
+        <form asp-action="RemoveCategory" asp-controller="Category" method="post">
+            <input type="hidden" name="id" value="@Model.Id" />
+            <button type="submit" class="btn btn-danger">Evet</button>
+            <a href="/Category" class="btn btn-warning">Hayır</a>
+        </form>
+    </div>
+</div>
+

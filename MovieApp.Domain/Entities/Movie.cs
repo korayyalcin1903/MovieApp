@@ -13,10 +13,11 @@ namespace MovieApp.Domain.Entities
         public string? Title { get; set; }
         public string? Description { get; set; }
         public string? ImageUrl { get; set; }
+        public string? BgImage { get; set; }
         public string? Director { get; set; }
         [Column(TypeName = "decimal(18,2)")]
         public decimal? Budget { get; set; }
-        public List<Cast> Casts { get; set; }
+        public List<MovieCast> MovieCasts { get; set; } = new();
         public Category? Category { get; set; }
         public Guid CategoryId { get; set; }
         public List<Comment> Comments { get; set; }

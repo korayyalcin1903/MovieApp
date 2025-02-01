@@ -6,12 +6,14 @@ import Cast from '../Components/Cast/Cast'
 import ProfileLayout from '../Layouts/ProfileLayout'
 import Login from '../Components/Auth/Login'
 import Register from '../Components/Auth/Register'
+import DetailPage from '../Components/MovieDetails/DetailPage'
 
 const AppRouter = () => {
   return (
-    <BrowserRouter>
+    <BrowserRouter basename='/'>
         <Routes>
             <Route path='/' element={<Home />}></Route>
+            <Route path='/movie/:id' element={<DetailPage />}></Route>
             <Route path='/filter' element={<Filter />}></Route>
             <Route path='/cast' element={<Cast />}></Route>
             <Route path='profile' element={<ProfileLayout />}></Route>

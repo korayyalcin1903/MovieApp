@@ -17,11 +17,13 @@ const Filter = () => {
       console.log(selectedCategory)
       fetch(`https://localhost:7265/api/Movie/category/${selectedCategory}`)
         .then(response => response.json())
-        .then(data => setMovies(data));
+        .then(data => setMovies(data))
+        .catch(err => console.log(err))
     } else {
       fetch("https://localhost:7265/api/Movie")
         .then(response => response.json())
-        .then(data => setMovies(data));
+        .then(data => setMovies(data))
+        .catch(err => console.log(err))
     }
   }, [selectedCategory]); 
 
@@ -32,14 +34,16 @@ const Filter = () => {
         .then(data => {
           const filterMovies = data.filter(movie => movie.title.toLowerCase().includes(query.toLowerCase()))
           setMovies(filterMovies)
-        });
+        })
+        .catch(err => console.log(err))
     }
   }, [query])
   
   useEffect(() => {
     fetch("https://localhost:7265/api/Category")
       .then(response => response.json())
-      .then(data => setCategories(data));
+      .then(data => setCategories(data))
+      .catch(err => console.log(err))
   }, []);
 
   const handleResetFilters = () => {
@@ -63,13 +67,24 @@ const Filter = () => {
         </div>
         <div className="row">
           <div className='col-xl-3 col-lg-4'>
-            <FilterSideBar categories={categories} setSelectedCategory={setSelectedCategory} />
+            {
+              categories.length > 0 ? (
+                <FilterSideBar categories={categories} setSelectedCategory={setSelectedCategory} />
+              ) : (
+                <b>Kategoriler bulunamadı</b>
+              )
+            }
           </div>
           <div className='col-xl-9 col-lg-8'>
             <div className="row">
-              {movies.map((movie) => (
-                <MovieCard key={movie.id} movie={movie} />
-              ))}
+              {
+                movies.length > 0 ? 
+                movies.map((movie) => (
+                  <MovieCard key={movie.id} movie={movie} />
+                )) : (
+                  <h4>Filmler bulunamadı</h4>
+                )
+              }
             </div>
           </div>
         </div>

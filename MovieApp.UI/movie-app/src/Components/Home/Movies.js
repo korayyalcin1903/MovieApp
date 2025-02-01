@@ -9,7 +9,8 @@ const Movies = () => {
        fetch("https://localhost:7265/api/Movie")
             .then(response => response.json())
             .then(data => setMovies(data))
-    }, [movies])
+            .catch(err => console.log(err))
+    }, [])
 
   return (
     <>
@@ -20,11 +21,13 @@ const Movies = () => {
 
         <div className="row">
           {
-            movies.map((movie) => (
+            movies.length > 0 ? (
+             movies.map((movie) => (
               <MovieCard key={movie.id} movie={movie} />
-            ))
+            ))) : (<h3>Film bulunamadı</h3>) 
           }
         </div>
+
     </>
   )
 }

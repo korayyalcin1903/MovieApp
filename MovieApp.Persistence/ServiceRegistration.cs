@@ -20,6 +20,7 @@ namespace MovieApp.Persistence
             services.AddScoped<ICategoryRepository, CategoryRepository>();
             services.AddScoped<ICastRepository, CastRepository>();
             services.AddScoped<ICommentRepository, CommentRepository>();
+            services.AddScoped<ICastMovieRepository, CastMovieRepository>();
         }
     }
 }

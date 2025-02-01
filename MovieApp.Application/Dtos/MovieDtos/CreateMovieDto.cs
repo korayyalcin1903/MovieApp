@@ -12,9 +12,11 @@ namespace MovieApp.Application.Dtos.MovieDtos
     {
         public string? Title { get; set; }
         public string? Description { get; set; }
+        public string? BgImage { get; set; }
         public string? Director { get; set; }
         public decimal? Budget { get; set; }
-        public DateTime CreatedDate { get; set; }
+        public string? ImageUrl { get; set; }
+        public DateTime CreatedDate { get; set; } = DateTime.Now;
         public Guid CategoryId { get; set; }
 
     }

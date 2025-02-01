@@ -54,12 +54,26 @@ namespace MovieApp.Application.Mapping
             CreateMap<Cast, GetAllCastDto>().ReverseMap();
             CreateMap<Cast, GetByIdCastDto>().ReverseMap();
             CreateMap<Cast, UpdateCastDto>().ReverseMap();
+            CreateMap<MovieCast, AddCastToMovieDto>().ReverseMap();
+
+            // MovieCast
+            CreateMap<MovieCast, Cast>().ReverseMap();
+            CreateMap<MovieCast, GetAllCastDto>().ReverseMap();
+            CreateMap<AddCastToMovieDto, MovieCast>().ReverseMap();
+            CreateMap<AddCastToMovieCommand, AddCastToMovieDto>();
+            CreateMap<MovieCast, GetAllCastDto>()
+                .ForMember(dest => dest.FullName, opt => opt.MapFrom(src => src.Cast.FullName))
+                .ForMember(dest => dest.ImgUrl, opt => opt.MapFrom(src => src.Cast.ImgUrl))
+                .ForMember(dest => dest.Biography, opt => opt.MapFrom(src => src.Cast.Biography));
+
 
             // Cast Command
 
             CreateMap<CreateCastCommand, Cast>().ReverseMap();
             CreateMap<RemoveCastCommand, Cast>().ReverseMap();
             CreateMap<UpdateCastCommand, Cast>().ReverseMap();
+            CreateMap<AddCastToMovieCommand, Cast>().ReverseMap();
+            CreateMap<AddCastToMovieCommand, AddCastToMovieDto>();
 
             // Comment 
             CreateMap<Comment, CreateCommentDto>().ReverseMap();

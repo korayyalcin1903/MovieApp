@@ -48,5 +48,11 @@ namespace MovieApp.WebApi.Controllers
         {
             return Ok(await _mediator.Send(command));
         }
+
+        [HttpGet("Movie/{id}")]
+        public async Task<IActionResult> GetCommentByMovie(string id)
+        {
+            return Ok(await _mediator.Send(new GetCommentByMovieIdQuery { Id = id }));
+        }
     }
 }

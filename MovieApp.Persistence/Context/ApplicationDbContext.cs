@@ -21,5 +21,6 @@ namespace MovieApp.Persistence.Context
         public DbSet<Comment> Comments { get; set; }
         public DbSet<Category> Categories { get; set; }
         public DbSet<WatchList> WatchLists { get; set; }
+        public DbSet<MovieCast> MovieCasts { get; set; }
     }
 }

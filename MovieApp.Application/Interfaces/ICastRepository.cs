@@ -1,4 +1,5 @@
-﻿using MovieApp.Domain.Entities;
+﻿using MovieApp.Application.Dtos.CastDtos;
+using MovieApp.Domain.Entities;
 using System;
 using System.Collections.Generic;
 using System.Linq;

@@ -1,0 +1,42 @@
+﻿@model List<GetAllMovieDto>
+
+@{
+    ViewData["Title"] = "Index";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<div class="chart-box">
+    <div class="d-flex justify-content-between">
+        <div class="col-4"><h4>Movie List</h4></div>
+        <div class="col-4"><a href="/Movies/CreateMovie" class="btn btn-success">Create</a></div>
+    </div>
+    <div class="bs-example" data-example-id="bordered-table">
+        <table class="table table-bordered">
+            <thead>
+                <tr>
+                    <th>#</th>
+                    <th>Title</th>
+                    <th>Image</th>
+                    <th>CategoryName</th>
+                    <th></th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach(var movie in Model)
+                {
+                    <tr>
+                        <th>@movie.Id</th>
+                        <td>@movie.Title</td>
+                        <td><img src="@movie.ImageUrl" style="width:50px; height:50px" /></td>
+                        <td>@movie.CategoryName</td>
+                        <td>
+                            <a href="/Movies/Update/@movie.Id"class="btn btn-warning">Edit</a>
+                            <a href="/Movies/Delete/@movie.Id" class="btn btn-danger">Delete</a>
+                        </td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+    </div>
+</div>
+

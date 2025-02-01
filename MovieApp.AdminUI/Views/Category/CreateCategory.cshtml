@@ -1,0 +1,52 @@
+﻿@model CreateCategoryDto
+
+@{
+    ViewData["Title"] = "CreateCategory";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<div class="chart-box">
+    <h4>Movie Create</h4>
+    @if (!ViewData.ModelState.IsValid)
+    {
+        <div class="alert alert-danger" role="alert">
+            <strong>Hata!</strong> Lütfen aşağıdaki hataları düzeltin:
+            <ul>
+                @foreach (var error in ViewData.ModelState.Values.SelectMany(v => v.Errors))
+                {
+                    <li>@error.ErrorMessage</li>
+                }
+            </ul>
+        </div>
+    }
+
+    <div class="row">
+        <form method="post">
+            <div class="col-md-6">
+                <div class="form-group has-feedback">
+                    <label class="control-label">Category Name</label>
+                    <input type="text" class="form-control" asp-for="CategoryName" placeholder="Category Name">
+                </div>
+            </div>
+            <div class="col-md-6">
+                <div class="form-group has-feedback">
+                    <label class="control-label">Category Img Url</label>
+                    <input type="text" class="form-control" asp-for="CategoryImgUrl" placeholder="Category Img Url">
+                </div>
+            </div>
+            @* <div class="col-md-6">
+                <label class="control-label">Category</label>
+                <select class="form-control" asp-for="CategoryId" name="CategoryId">
+                    @foreach (var category in ViewBag.Categories)
+                    {
+                        <option value="@category.Id" class="my-2">@category.CategoryName</option>
+                    }
+                </select>
+            </div> *@
+            <div class="col-md-12">
+                <button type="submit" class="btn btn-default">Submit</button>
+            </div>
+        </form>
+    </div>
+</div>
+

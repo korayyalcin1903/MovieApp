@@ -5,14 +5,14 @@
 namespace MovieApp.Persistence.Migrations
 {
     /// <inheritdoc />
-    public partial class AddImgToCast : Migration
+    public partial class AddBgImage : Migration
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
         {
             migrationBuilder.AddColumn<string>(
-                name: "ImgUrl",
-                table: "Casts",
+                name: "BgImage",
+                table: "Movies",
                 type: "nvarchar(max)",
                 nullable: true);
         }
@@ -21,8 +21,8 @@ namespace MovieApp.Persistence.Migrations
         protected override void Down(MigrationBuilder migrationBuilder)
         {
             migrationBuilder.DropColumn(
-                name: "ImgUrl",
-                table: "Casts");
+                name: "BgImage",
+                table: "Movies");
         }
     }
 }
