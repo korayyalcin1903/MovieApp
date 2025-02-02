@@ -1,0 +1,19 @@
+﻿@model GetByIdCommentDto
+
+@{
+    ViewData["Title"] = "RemoveComment";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<div class="container">
+    <h2>Remove Comment</h2>
+    <h4>#@Model.Id - @Model.Name silmek istediğinizden emin misiniz?</h4>
+    <div class="d-inline-flex gap-2">
+        <form asp-action="RemoveComment" asp-controller="Comment" method="post">
+            <input type="hidden" name="id" value="@Model.Id" />
+            <button type="submit" class="btn btn-danger">Evet</button>
+            <a href="/Comment" class="btn btn-warning">Hayır</a>
+        </form>
+    </div>
+</div>
+

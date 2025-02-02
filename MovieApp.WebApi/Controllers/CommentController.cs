@@ -1,4 +1,5 @@
 ﻿using MediatR;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using MovieApp.Application.Features.Commands.CommentCommands;
@@ -31,18 +32,21 @@ namespace MovieApp.WebApi.Controllers
             return Ok(await _mediator.Send(new GetByIdCommentQuery { Id = id }));
         }
 
+        [Authorize(Roles = "admin")]
         [HttpPost]
         public async Task<IActionResult> CreateComment(CreateCommentCommand command)
         {
             return Ok(await _mediator.Send(command));
         }
 
+        [Authorize(Roles = "admin")]
         [HttpPut("{id}")]
         public async Task<IActionResult> UpdateMovie(UpdateCommentCommand command)
         {
             return Ok(await _mediator.Send(command));
         }
 
+        [Authorize(Roles = "admin")]
         [HttpDelete("{id}")]
         public async Task<IActionResult> RemoveMovie(RemoveCommentCommand command)
         {

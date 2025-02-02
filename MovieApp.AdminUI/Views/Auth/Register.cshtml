@@ -1,0 +1,72 @@
+﻿@model RegisterDto
+
+@{
+    ViewData["Title"] = "Register";
+    Layout = "~/Views/Shared/_AuthLayout.cshtml";
+}
+
+<header>Register</header>
+<form method="post">
+    <fieldset>
+        <section>
+            <div class="form-group has-feedback">
+                <label class="control-label">First Name</label>
+                <input class="form-control" placeholder="First Name" asp-for="FirstName" type="text">
+                <span class="fa fa-envelope form-control-feedback" aria-hidden="true"></span>
+            </div>
+        </section>
+        <section>
+            <div class="form-group has-feedback">
+                <label class="control-label">Last Name</label>
+                <input class="form-control" placeholder="Last Name" asp-for="LastName" type="text">
+                <span class="fa fa-envelope form-control-feedback" aria-hidden="true"></span>
+            </div>
+        </section>
+        <section>
+            <div class="form-group has-feedback">
+                <label class="control-label">Username</label>
+                <input class="form-control" placeholder="Username" asp-for="UserName" type="text">
+                <span class="fa fa-envelope form-control-feedback" aria-hidden="true"></span>
+            </div>
+        </section>
+        <section>
+            <div class="form-group has-feedback">
+                <label class="control-label">E-mail</label>
+                <input class="form-control" placeholder="E-mail" asp-for="Email" type="email">
+                <span class="fa fa-envelope form-control-feedback" aria-hidden="true"></span>
+            </div>
+        </section>
+        <section>
+            <div class="form-group has-feedback">
+                <label class="control-label">Phone Number</label>
+                <input class="form-control" placeholder="Phone Number" asp-for="PhoneNumber" type="tel">
+                <span class="fa fa-envelope form-control-feedback" aria-hidden="true"></span>
+            </div>
+        </section>
+        <section>
+            <div class="form-group has-feedback">
+                <label class="control-label">Password</label>
+                <input class="form-control" placeholder="Password" asp-for="Password" type="password">
+                <span class="fa fa-lock form-control-feedback" aria-hidden="true"></span>
+            </div>
+        </section>
+    </fieldset>
+    @if (!ViewData.ModelState.IsValid)
+    {
+        <div class="">
+            <ul class="list-group">
+                @foreach (var error in ViewData.ModelState.Values.SelectMany(v => v.Errors))
+                {
+                    <li class="list-group-item text-danger">@error.ErrorMessage</li>
+                }
+            </ul>
+        </div>
+    }
+    <footer class="text-right">
+        <button type="submit" class="btn btn-info pull-right">Register</button>
+        <a asp-action="Login" asp-controller="Auth" class="button button-secondary">Login</a>
+    </footer>
+</form>
+
+
+

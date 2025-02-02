@@ -2,17 +2,17 @@
 using Newtonsoft.Json;
 using System.Net.Http;
 using System.Text;
-using MovieApp.Application.Dtos.CategoryDtos;
+using MovieApp.Application.Dtos.CommentDtos;
 using MovieApp.Application.Dtos.MovieDtos;
 using MovieApp.AdminUI.Helpers;
 
-namespace CategoryApp.AdminUI.Controllers
+namespace CommentApp.AdminUI.Controllers
 {
-    public class CategoryController : Controller
+    public class CommentController : Controller
     {
         private readonly HttpClient _client;
 
-        public CategoryController(HttpClient client)
+        public CommentController(HttpClient client)
         {
             _client = client;
         }
@@ -21,53 +21,56 @@ namespace CategoryApp.AdminUI.Controllers
         public async Task<IActionResult> Index()
         {
             TokenHelper.AddAuthorizationHeader(_client, HttpContext);
-            var response = await _client.GetStringAsync("https://localhost:7265/api/Category");
-            var Category = JsonConvert.DeserializeObject<List<GetAllCategoryDto>>(response);
-            return View(Category);
+            var response = await _client.GetStringAsync("https://localhost:7265/api/Comment");
+            var Comment = JsonConvert.DeserializeObject<List<GetAllCommentDto>>(response);
+            return View(Comment);
         }
 
         [HttpGet]
-        public async Task<IActionResult> CreateCategory()
+        public async Task<IActionResult> CreateComment()
         {
             TokenHelper.AddAuthorizationHeader(_client, HttpContext);
+            ViewBag.Movies = await GetMoviesAsync();
             return View();
         }
 
         [HttpPost]
-        public async Task<IActionResult> CreateCategory(CreateCategoryDto dto)
+        public async Task<IActionResult> CreateComment(CreateCommentDto dto)
         {
             TokenHelper.AddAuthorizationHeader(_client, HttpContext);
+            ViewBag.Movies = await GetMoviesAsync();
             if (!ModelState.IsValid)
             {
                 return View(dto);
             }
 
             var jsonContent = new StringContent(JsonConvert.SerializeObject(dto), Encoding.UTF8, "application/json");
-            var response = await _client.PostAsync("https://localhost:7265/api/Category", jsonContent);
+            var response = await _client.PostAsync("https://localhost:7265/api/Comment", jsonContent);
             if (response.IsSuccessStatusCode)
             {
                 return RedirectToAction("Index");
             }
-            ModelState.AddModelError(string.Empty, "Kategori eklenirken bir hata oluştu.");
+            ModelState.AddModelError(string.Empty, "Yorum eklenirken bir hata oluştu.");
             return View(dto);
         }
 
         [HttpGet]
-        [Route("/Category/Update/{id}")]
-        public async Task<IActionResult> UpdateCategory(string id)
+        [Route("/Comment/Update/{id}")]
+        public async Task<IActionResult> UpdateComment(string id)
         {
             TokenHelper.AddAuthorizationHeader(_client, HttpContext);
-            ViewBag.Movies = await GetMoviesAsync(id);
-            var response = await _client.GetStringAsync("https://localhost:7265/api/Category/" + id);
-            var movie = JsonConvert.DeserializeObject<UpdateCategoryDto>(response);
-            return View(movie);
+            ViewBag.Movies = await GetMoviesAsync();
+            var response = await _client.GetStringAsync("https://localhost:7265/api/Comment/" + id);
+            var comment = JsonConvert.DeserializeObject<UpdateCommentDto>(response);
+            return View(comment);
         }
 
         [HttpPost]
-        [Route("/Category/Update/{id}")]
-        public async Task<IActionResult> UpdateCategory(UpdateCategoryDto dto, string id)
+        [Route("/Comment/Update/{id}")]
+        public async Task<IActionResult> UpdateComment(UpdateCommentDto dto, string id)
         {
             TokenHelper.AddAuthorizationHeader(_client, HttpContext);
+            ViewBag.Movies = await GetMoviesAsync();
             if (dto.Id != id)
             {
                 ModelState.AddModelError(string.Empty, "Id uyuşmuyor");
@@ -79,34 +82,34 @@ namespace CategoryApp.AdminUI.Controllers
                 return View(dto);
             }
             var jsonContent = new StringContent(JsonConvert.SerializeObject(dto), Encoding.UTF8, "application/json");
-            var response = await _client.PutAsync("https://localhost:7265/api/Category/" + id, jsonContent);
+            var response = await _client.PutAsync("https://localhost:7265/api/Comment/" + id, jsonContent);
             if (response.IsSuccessStatusCode)
             {
                 return RedirectToAction("Index");
             }
-            ModelState.AddModelError(string.Empty, "Kategori güncellenirken bir hata oluştu.");
+            ModelState.AddModelError(string.Empty, "Yorum güncellenirken bir hata oluştu.");
             return View(dto);
         }
 
         [HttpGet]
-        [Route("/Category/Delete/{id}")]
-        public async Task<IActionResult> RemoveCategory(Guid id)
+        [Route("/Comment/Delete/{id}")]
+        public async Task<IActionResult> RemoveComment(Guid id)
         {
             TokenHelper.AddAuthorizationHeader(_client, HttpContext);
-            var response = await _client.GetStringAsync("https://localhost:7265/api/Category/" + id);
-            var movie = JsonConvert.DeserializeObject<GetByIdCategoryDto>(response);
-            return View(movie);
+            var response = await _client.GetStringAsync("https://localhost:7265/api/Comment/" + id);
+            var comment = JsonConvert.DeserializeObject<GetByIdCommentDto>(response);
+            return View(comment);
         }
 
         [HttpPost]
-        [Route("/Category/Delete/{id}")]
-        public async Task<IActionResult> RemoveCategory(string id)
+        [Route("/Comment/Delete/{id}")]
+        public async Task<IActionResult> RemoveComment(string id)
         {
             TokenHelper.AddAuthorizationHeader(_client, HttpContext);
             var request = new HttpRequestMessage
             {
                 Method = HttpMethod.Delete,
-                RequestUri = new Uri("https://localhost:7265/api/Category/" + id),
+                RequestUri = new Uri("https://localhost:7265/api/Comment/" + id),
                 Content = new StringContent(JsonConvert.SerializeObject(new { Id = id }), Encoding.UTF8, "application/json")
             };
 
@@ -115,13 +118,13 @@ namespace CategoryApp.AdminUI.Controllers
             {
                 return RedirectToAction("Index");
             }
-            ModelState.AddModelError(string.Empty, "Kategori güncellenirken bir hata oluştu.");
+            ModelState.AddModelError(string.Empty, "Yorum güncellenirken bir hata oluştu.");
             return View();
         }
 
-        private async Task<List<GetAllMovieDto>> GetMoviesAsync(string id)
+        private async Task<List<GetAllMovieDto>> GetMoviesAsync()
         {
-            var response = await _client.GetStringAsync("https://localhost:7265/api/Movie/category/" + id);
+            var response = await _client.GetStringAsync("https://localhost:7265/api/Movie/");
             return JsonConvert.DeserializeObject<List<GetAllMovieDto>>(response);
         }
     }

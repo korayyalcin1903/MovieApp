@@ -1,4 +1,5 @@
 ﻿using MediatR;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using MovieApp.Application.Dtos.MovieDtos;
@@ -35,22 +36,26 @@ namespace MovieApp.WebApi.Controllers
             return Ok(await _mediator.Send(new GetMovieByCategoryQuery(categoryId)));
         }
 
+        [Authorize(Roles = "admin")]
         [HttpPost]
         public async Task<IActionResult> CreateMovie(CreateMovieCommand command)
         {
             return Ok(await _mediator.Send(command));
         }
 
+        [Authorize(Roles = "admin")]
         [HttpPut("{id}")]
         public async Task<IActionResult> UpdateMovie(UpdateMovieCommand command)
         {
             return Ok(await _mediator.Send(command));
         }
 
+        [Authorize(Roles = "admin")]
         [HttpDelete("{id}")]
         public async Task<IActionResult> RemoveMovie(RemoveMovieCommand command)
         {
             return Ok(await _mediator.Send(command));
         }
+
     }
 }

@@ -1,0 +1,19 @@
+﻿@model GetByIdCastDto
+
+@{
+    ViewData["Title"] = "RemoveCast";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<div class="container">
+    <h2>Remove Cast</h2>
+    <h4>#@Model.Id - @Model.FullName silmek istediğinizden emin misiniz?</h4>
+    <div class="d-inline-flex gap-2">
+        <form asp-action="RemoveCast" asp-controller="Cast" method="post">
+            <input type="hidden" name="id" value="@Model.Id" />
+            <button type="submit" class="btn btn-danger">Evet</button>
+            <a href="/Cast" class="btn btn-warning">Hayır</a>
+        </form>
+    </div>
+</div>
+

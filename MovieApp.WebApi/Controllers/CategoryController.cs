@@ -1,4 +1,5 @@
 ﻿using MediatR;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using MovieApp.Application.Features.Commands.CategoryCommands;
@@ -30,18 +31,21 @@ namespace MovieApp.WebApi.Controllers
             return Ok(await _mediator.Send(new GetByIdCategoryQuery { Id = id }));
         }
 
+        [Authorize(Roles = "admin")]
         [HttpPost]
         public async Task<IActionResult> CreateCategory(CreateCategoryCommand command)
         {
             return Ok(await _mediator.Send(command));
         }
 
+        [Authorize(Roles = "admin")]
         [HttpPut("{id}")]
         public async Task<IActionResult> UpdateCategory(UpdateCategoryCommand command)
         {
             return Ok(await _mediator.Send(command));
         }
 
+        [Authorize(Roles = "admin")]
         [HttpDelete("{id}")]
         public async Task<IActionResult> RemoveCategory(RemoveCategoryCommand command)
         {

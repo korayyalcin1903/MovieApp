@@ -28,7 +28,7 @@ namespace MovieApp.WebApi.Controllers
         }
 
         [HttpPost("login")]
-        public async Task<IActionResult> Login(LoginDto dto)
+        public async Task<IActionResult> Login([FromBody] LoginDto dto)
         {
             var user = await _userManager.FindByEmailAsync(dto.Email);
             if (user != null)
@@ -56,7 +56,7 @@ namespace MovieApp.WebApi.Controllers
         }
 
         [HttpPost("register")]
-        public async Task<IActionResult> Register(RegisterDto dto)
+        public async Task<IActionResult> Register([FromBody] RegisterDto dto)
         {
             if (await _userManager.FindByEmailAsync(dto.Email) != null)
                 return BadRequest("Bu e-posta adresi zaten kullanımda.");
@@ -111,10 +111,10 @@ namespace MovieApp.WebApi.Controllers
                 new Claim("LastName" ,user.LastName),
             };
 
-            //foreach (var roleName in roles)
-            //{
-            //    claims.Add(new Claim(ClaimTypes.Role, roleName));
-            //}
+            foreach (var roleName in roles)
+            {
+                claims.Add(new Claim(ClaimTypes.Role, roleName));
+            }
 
             var tokenDescriptor = new SecurityTokenDescriptor
             {

@@ -1,0 +1,42 @@
+﻿@model LoginDto
+
+@{
+    ViewData["Title"] = "Login";
+    Layout = "~/Views/Shared/_AuthLayout.cshtml";
+}
+
+<header>Login Form</header>
+    <form method="post">
+        <fieldset>
+                <section>
+                    <div class="form-group has-feedback">
+                        <label class="control-label">E-mail</label>
+                        <input class="form-control" placeholder="E-mail" asp-for="Email" type="text">
+                        <span class="fa fa-envelope form-control-feedback" aria-hidden="true"></span>
+                    </div>
+                </section>
+                <section>
+                    <div class="form-group has-feedback">
+                        <label class="control-label">Password</label>
+                        <input class="form-control" placeholder="Password" asp-for="Password" type="password">
+                        <span class="fa fa-lock form-control-feedback" aria-hidden="true"></span>
+                    </div>
+                </section>
+        </fieldset>
+    @if (!ViewData.ModelState.IsValid)
+    {
+        <div class="">
+            <ul class="list-group">
+                @foreach (var error in ViewData.ModelState.Values.SelectMany(v => v.Errors))
+                {
+                    <li class="list-group-item text-danger">@error.ErrorMessage</li>
+                }
+            </ul>
+        </div>
+    }
+        <footer class="text-right">
+            <button type="submit" class="btn btn-info pull-right">Login</button>
+            <a asp-action="Register" asp-controller="Auth" class="button button-secondary">Register</a>
+        </footer>
+    </form>
+

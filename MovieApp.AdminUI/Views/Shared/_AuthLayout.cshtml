@@ -1,6 +1,4 @@
-﻿
-<!DOCTYPE html>
-<html lang="en">
+﻿<html lang="en" style="height: auto; min-height: 100%;">
 <head>
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
@@ -9,7 +7,7 @@
     <title>Ovio -  Bootstrap Based Responsive Dashboard &amp; Admin Template</title>
 
     <!-- Bootstrap -->
-    <link rel="stylesheet" href="~/lib/bootstrap4/css/bootstrap.css">
+    <link rel="stylesheet" href="~/lib/bootstrap4/css/bootstrap.min.css">
 
     <!-- Google Font -->
     <link href="https://fonts.googleapis.com/css?family=Poppins:300,400,500,600,700" rel="stylesheet">
@@ -31,24 +29,14 @@
     <script src="~/lib/plugins/charts/code/highcharts.js"></script>
 </head>
 
-<body class="sidebar-mini">
-    <div class="wrapper">
-
-        <!-- Main Header -->
-        @await Component.InvokeAsync("_HeaderUILayoutComponentPartial")
-        <!-- Left side column. contains the logo and sidebar -->
-        @await Component.InvokeAsync("_SideBarUILayoutComponentPartial")
-
-        <!-- Content Wrapper. Contains page content -->
-        <div class="content-wrapper">
-            @RenderBody()
+<body class="body-bg-color" style="height: auto; min-height: 100%;">
+    <div class="wrapper" style="height: auto; min-height: 100%;">
+        <div class="form-body">
+            <div class="col-form">
+                <div class="col-logo"><a href="../index.html"><img alt="" src="../dist/img/logo-lg.png"></a></div>
+                @RenderBody()
+            </div>
         </div>
-        <!-- content-wrapper -->
-        <!-- Main Footer -->
-        <footer class="main-footer dark-bg">
-            <div class="pull-right hidden-xs"> Version 1.0</div>
-            Copyright &copy; 2017 Yourdomian. All rights reserved.
-        </footer>
     </div>
     <!-- wrapper -->
     <!-- jQuery -->
@@ -60,5 +48,6 @@
     <script src="~/lib/plugins/charts/code/modules/exporting.js"></script>
     <script src="~/lib/plugins/charts/chart-functions.js"></script>
     <script src="~/lib/plugins/charts/code/highcharts.js"></script>
+
 </body>
 </html>

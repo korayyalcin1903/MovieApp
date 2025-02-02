@@ -2,17 +2,16 @@
 using Newtonsoft.Json;
 using System.Net.Http;
 using System.Text;
-using MovieApp.Application.Dtos.CategoryDtos;
+using MovieApp.Application.Dtos.CastDtos;
 using MovieApp.Application.Dtos.MovieDtos;
-using MovieApp.AdminUI.Helpers;
 
-namespace CategoryApp.AdminUI.Controllers
+namespace CastApp.AdminUI.Controllers
 {
-    public class CategoryController : Controller
+    public class CastController : Controller
     {
         private readonly HttpClient _client;
 
-        public CategoryController(HttpClient client)
+        public CastController(HttpClient client)
         {
             _client = client;
         }
@@ -20,30 +19,27 @@ namespace CategoryApp.AdminUI.Controllers
         [HttpGet]
         public async Task<IActionResult> Index()
         {
-            TokenHelper.AddAuthorizationHeader(_client, HttpContext);
-            var response = await _client.GetStringAsync("https://localhost:7265/api/Category");
-            var Category = JsonConvert.DeserializeObject<List<GetAllCategoryDto>>(response);
-            return View(Category);
+            var response = await _client.GetStringAsync("https://localhost:7265/api/Cast");
+            var Cast = JsonConvert.DeserializeObject<List<GetAllCastDto>>(response);
+            return View(Cast);
         }
 
         [HttpGet]
-        public async Task<IActionResult> CreateCategory()
+        public async Task<IActionResult> CreateCast()
         {
-            TokenHelper.AddAuthorizationHeader(_client, HttpContext);
             return View();
         }
 
         [HttpPost]
-        public async Task<IActionResult> CreateCategory(CreateCategoryDto dto)
+        public async Task<IActionResult> CreateCast(CreateCastDto dto)
         {
-            TokenHelper.AddAuthorizationHeader(_client, HttpContext);
             if (!ModelState.IsValid)
             {
                 return View(dto);
             }
 
             var jsonContent = new StringContent(JsonConvert.SerializeObject(dto), Encoding.UTF8, "application/json");
-            var response = await _client.PostAsync("https://localhost:7265/api/Category", jsonContent);
+            var response = await _client.PostAsync("https://localhost:7265/api/Cast", jsonContent);
             if (response.IsSuccessStatusCode)
             {
                 return RedirectToAction("Index");
@@ -53,22 +49,20 @@ namespace CategoryApp.AdminUI.Controllers
         }
 
         [HttpGet]
-        [Route("/Category/Update/{id}")]
-        public async Task<IActionResult> UpdateCategory(string id)
+        [Route("/Cast/Update/{id}")]
+        public async Task<IActionResult> UpdateCast(string id)
         {
-            TokenHelper.AddAuthorizationHeader(_client, HttpContext);
             ViewBag.Movies = await GetMoviesAsync(id);
-            var response = await _client.GetStringAsync("https://localhost:7265/api/Category/" + id);
-            var movie = JsonConvert.DeserializeObject<UpdateCategoryDto>(response);
-            return View(movie);
+            var response = await _client.GetStringAsync("https://localhost:7265/api/Cast/" + id);
+            var cast = JsonConvert.DeserializeObject<UpdateCastDto>(response);
+            return View(cast);
         }
 
         [HttpPost]
-        [Route("/Category/Update/{id}")]
-        public async Task<IActionResult> UpdateCategory(UpdateCategoryDto dto, string id)
+        [Route("/Cast/Update/{id}")]
+        public async Task<IActionResult> UpdateCast(UpdateCastDto dto, string id)
         {
-            TokenHelper.AddAuthorizationHeader(_client, HttpContext);
-            if (dto.Id != id)
+            if(dto.Id != id)
             {
                 ModelState.AddModelError(string.Empty, "Id uyuşmuyor");
                 return View(dto);
@@ -79,7 +73,7 @@ namespace CategoryApp.AdminUI.Controllers
                 return View(dto);
             }
             var jsonContent = new StringContent(JsonConvert.SerializeObject(dto), Encoding.UTF8, "application/json");
-            var response = await _client.PutAsync("https://localhost:7265/api/Category/" + id, jsonContent);
+            var response = await _client.PutAsync("https://localhost:7265/api/Cast/" + id, jsonContent);
             if (response.IsSuccessStatusCode)
             {
                 return RedirectToAction("Index");
@@ -89,24 +83,22 @@ namespace CategoryApp.AdminUI.Controllers
         }
 
         [HttpGet]
-        [Route("/Category/Delete/{id}")]
-        public async Task<IActionResult> RemoveCategory(Guid id)
+        [Route("/Cast/Delete/{id}")]
+        public async Task<IActionResult> RemoveCast(Guid id)
         {
-            TokenHelper.AddAuthorizationHeader(_client, HttpContext);
-            var response = await _client.GetStringAsync("https://localhost:7265/api/Category/" + id);
-            var movie = JsonConvert.DeserializeObject<GetByIdCategoryDto>(response);
-            return View(movie);
+            var response = await _client.GetStringAsync("https://localhost:7265/api/Cast/" + id);
+            var cast = JsonConvert.DeserializeObject<GetByIdCastDto>(response);
+            return View(cast);
         }
 
         [HttpPost]
-        [Route("/Category/Delete/{id}")]
-        public async Task<IActionResult> RemoveCategory(string id)
+        [Route("/Cast/Delete/{id}")]
+        public async Task<IActionResult> RemoveCast(string id)
         {
-            TokenHelper.AddAuthorizationHeader(_client, HttpContext);
             var request = new HttpRequestMessage
             {
                 Method = HttpMethod.Delete,
-                RequestUri = new Uri("https://localhost:7265/api/Category/" + id),
+                RequestUri = new Uri("https://localhost:7265/api/Cast/" + id),
                 Content = new StringContent(JsonConvert.SerializeObject(new { Id = id }), Encoding.UTF8, "application/json")
             };
 

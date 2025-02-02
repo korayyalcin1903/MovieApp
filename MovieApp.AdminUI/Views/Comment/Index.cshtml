@@ -1,0 +1,42 @@
+﻿@model List<GetAllCommentDto>
+
+@{
+    ViewData["Title"] = "Index";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<div class="chart-box">
+    <div class="d-flex justify-content-between">
+        <div class="col-4"><h4>Comment List</h4></div>
+        <div class="col-4"><a href="/Comment/CreateComment" class="btn btn-success">Create</a></div>
+    </div>
+    <div class="bs-example" data-example-id="bordered-table">
+        <table class="table table-bordered">
+            <thead>
+                <tr>
+                    <th>#</th>
+                    <th>Name</th>
+                    <th>Email</th>
+                    <th>Rating</th>
+                    <th></th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var comment in Model)
+                {
+                    <tr>
+                        <th>@comment.Id</th>
+                        <td>@comment.Name</td>
+                        <td>@comment.Email</td>
+                        <td>@comment.Rating</td>
+                        <td>
+                            <a href="/Comment/Update/@comment.Id" class="btn btn-warning">Edit</a>
+                            <a href="/Comment/Delete/@comment.Id" class="btn btn-danger">Delete</a>
+                        </td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+    </div>
+</div>
+

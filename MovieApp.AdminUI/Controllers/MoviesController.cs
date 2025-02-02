@@ -1,4 +1,5 @@
 ﻿using Microsoft.AspNetCore.Mvc;
+using MovieApp.AdminUI.Helpers;
 using MovieApp.Application.Dtos.CategoryDtos;
 using MovieApp.Application.Dtos.MovieDtos;
 using MovieApp.Domain.Entities;
@@ -20,6 +21,7 @@ namespace MovieApp.AdminUI.Controllers
         [HttpGet]
         public async Task<IActionResult> Index()
         {
+            TokenHelper.AddAuthorizationHeader(_client, HttpContext);
             var response = await _client.GetStringAsync("https://localhost:7265/api/Movie");
             var movies = JsonConvert.DeserializeObject<List<GetAllMovieDto>>(response);
             return View(movies);
@@ -28,6 +30,7 @@ namespace MovieApp.AdminUI.Controllers
         [HttpGet]
         public async Task<IActionResult> CreateMovie()
         {
+            TokenHelper.AddAuthorizationHeader(_client, HttpContext);
             ViewBag.Categories = await GetCategoryAsync();
             return View();
         }
@@ -35,6 +38,7 @@ namespace MovieApp.AdminUI.Controllers
         [HttpPost]
         public async Task<IActionResult> CreateMovie(CreateMovieDto dto)
         {
+            TokenHelper.AddAuthorizationHeader(_client, HttpContext);
             ViewBag.Categories = await GetCategoryAsync();
 
             if (!ModelState.IsValid)
@@ -56,6 +60,7 @@ namespace MovieApp.AdminUI.Controllers
         [Route("/Movies/Update/{id}")]
         public async Task<IActionResult> UpdateMovie(string id)
         {
+            TokenHelper.AddAuthorizationHeader(_client, HttpContext);
             ViewBag.Categories = await GetCategoryAsync();
             var response = await _client.GetStringAsync("https://localhost:7265/api/Movie/" + id);
             var movie = JsonConvert.DeserializeObject<UpdateMovieDto>(response);
@@ -66,6 +71,7 @@ namespace MovieApp.AdminUI.Controllers
         [Route("/Movies/Update/{id}")]
         public async Task<IActionResult> UpdateMovie(UpdateMovieDto dto, string id)
         {
+            TokenHelper.AddAuthorizationHeader(_client, HttpContext);
             ViewBag.Categories = await GetCategoryAsync();
             if(dto.Id != Guid.Parse(id))
             {
@@ -91,6 +97,7 @@ namespace MovieApp.AdminUI.Controllers
         [Route("/Movies/Delete/{id}")]
         public async Task<IActionResult> RemoveMovie(Guid id)
         {
+            TokenHelper.AddAuthorizationHeader(_client, HttpContext);
             var response = await _client.GetStringAsync("https://localhost:7265/api/Movie/" + id);
             var movie = JsonConvert.DeserializeObject<GetByIdMovieDto>(response);
             return View(movie);
@@ -100,6 +107,7 @@ namespace MovieApp.AdminUI.Controllers
         [Route("/Movies/Delete/{id}")]
         public async Task<IActionResult> RemoveMovie(string id)
         {
+            TokenHelper.AddAuthorizationHeader(_client, HttpContext);
             var request = new HttpRequestMessage
             {
                 Method = HttpMethod.Delete,

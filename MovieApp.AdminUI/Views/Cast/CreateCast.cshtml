@@ -1,0 +1,73 @@
+﻿@model CreateCastDto
+
+@{
+    ViewData["Title"] = "CreateCast";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<div class="chart-box">
+    <h4>Comment Create</h4>
+    @if (!ViewData.ModelState.IsValid)
+    {
+        <div class="alert alert-danger" role="alert">
+            <strong>Hata!</strong> Lütfen aşağıdaki hataları düzeltin:
+            <ul>
+                @foreach (var error in ViewData.ModelState.Values.SelectMany(v => v.Errors))
+                {
+                    <li>@error.ErrorMessage</li>
+                }
+            </ul>
+        </div>
+    }
+
+    <div class="row">
+        <form method="post">
+            <div class="col-md-6">
+                <div class="form-group has-feedback">
+                    <label class="control-label">FullName</label>
+                    <input type="text" class="form-control" asp-for="FullName" placeholder="FullName">
+                </div>
+            </div>
+            <div class="col-md-6">
+                <div class="form-group has-feedback">
+                    <label class="control-label">Image</label>
+                    <input type="text" class="form-control" asp-for="ImgUrl" placeholder="Image">
+                </div>
+            </div>
+            <div class="col-md-6">
+                <div class="form-group has-feedback">
+                    <label class="control-label">Biography</label>
+                    <input type="text" class="form-control" asp-for="Biography" placeholder="Biography">
+                </div>
+            </div>
+            <div class="col-md-6">
+                <div class="form-group has-feedback">
+                    <label class="control-label">Country</label>
+                    <input type="text" class="form-control" asp-for="Country" placeholder="Country">
+                </div>
+            </div>
+            <div class="col-md-6">
+                <div class="radio">
+                    <label>
+                        <input type="radio" name="Gender" asp-for="Gender" value="True" checked="">
+                        Male
+                    </label>
+                </div>
+                <div class="radio">
+                    <label>
+                        <input type="radio" name="Gender" asp-for="Gender" value="False">
+                        Female
+                    </label>
+                </div>
+            </div>
+            <div class="col-md-6">
+                <label class="control-label">Date of Birth</label>
+                <input type="date" class="form-control" asp-for="DateOfBirth" placeholder="Date of Birth">
+            </div>
+            <div class="col-md-12">
+                <button type="submit" class="btn btn-default">Submit</button>
+            </div>
+        </form>
+    </div>
+</div>
+

@@ -9,7 +9,7 @@ using MovieApp.Domain.Entities;
 
 namespace MovieApp.WebApi.Controllers
 {
-    [Authorize]
+    [Authorize(Roles = "admin")]
     [Route("api/[controller]")]
     [ApiController]
     public class UserController : ControllerBase
