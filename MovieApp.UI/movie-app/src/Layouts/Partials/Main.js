@@ -88,7 +88,7 @@ return (
                         </Link>
                         <Link className="dropdown-item d-flex align-items-center" href="#">
                             <div className="dropdown-list-image mr-3">
-                                <img className="rounded-circle w-60" src="img/s1.png" alt="" />
+                                <img className="rounded-circle w-60" src="/img/s1.png" alt="" />
                                 <div className="status-indicator bg-success"></div>
                             </div>
                             <div>
@@ -98,7 +98,7 @@ return (
                         </Link>
                         <Link className="dropdown-item d-flex align-items-center" href="#">
                             <div className="dropdown-list-image mr-3">
-                                <img className="rounded-circle w-60" src="img/s2.png" alt="" />
+                                <img className="rounded-circle w-60" src="/img/s2.png" alt="" />
                                 <div className="status-indicator"></div>
                             </div>
                             <div>
@@ -109,7 +109,7 @@ return (
                         </Link>
                         <Link className="dropdown-item d-flex align-items-center" href="#">
                             <div className="dropdown-list-image mr-3">
-                                <img className="rounded-circle w-60" src="img/s3.png" alt="" />
+                                <img className="rounded-circle w-60" src="/img/s3.png" alt="" />
                                 <div className="status-indicator bg-warning"></div>
                             </div>
                             <div>
@@ -148,7 +148,7 @@ return (
                     <Link className="nav-link dropdown-toggle" href="#" id="userDropdown" role="button" data-toggle="dropdown"
                         aria-haspopup="true" aria-expanded="false">
                         <span className="mr-2 d-none d-lg-inline text-gray-600 small">Askbootstrap</span>
-                        <img className="img-profile rounded-circle" src="img/s4.png" />
+                        <img className="img-profile rounded-circle" src="/img/s4.png" />
                     </Link>
 
                     <div className="dropdown-menu dropdown-menu-right shadow animated--grow-in"

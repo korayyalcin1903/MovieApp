@@ -41,7 +41,7 @@ const DetailPage = () => {
                                         <h6 className="text-gray-900 mb-0 font-weight-bold"><i className="fas fa-heart text-danger"></i> 50%</h6>
                                         <small className="text-muted">8,784</small>
                                     </div>
-                                    <img src={movie.bgImage} style={{objectFit: "cover", width: "100%", height:"80vh"}} className="img-fluid" alt="..."/>
+                                    <img src={movie.bgImage} style={{objectFit: "cover", width: "100%", height:"60vh"}} className="img-fluid" alt="..."/>
                                 </div>
                             </div>
                             <div className="col-xl-3 col-lg-3">

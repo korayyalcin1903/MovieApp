@@ -1,8 +1,10 @@
+using FluentValidation;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.IdentityModel.Tokens;
 using Microsoft.OpenApi.Models;
 using MovieApp.Application;
+using MovieApp.Application.Validators.MovieValidators;
 using MovieApp.Domain.Entities;
 using MovieApp.Persistence;
 using MovieApp.Persistence.Context;
@@ -19,6 +21,15 @@ builder.Services.AddCors(options =>
               .AllowAnyMethod();
     });
 });
+
+builder.Services.AddLogging(i =>
+{
+    i.ClearProviders();
+    //i.SetMinimumLevel(LogLevel);
+    i.AddDebug();
+});
+
+builder.Services.AddValidatorsFromAssemblyContaining<CreateMovieCommandValidator>();
 
 // Add services to the container.
 

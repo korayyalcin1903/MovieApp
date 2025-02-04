@@ -4,6 +4,7 @@ using MovieApp.Application.Dtos.CategoryDtos;
 using MovieApp.Application.Dtos.MovieDtos;
 using MovieApp.Domain.Entities;
 using Newtonsoft.Json;
+using System.IdentityModel.Tokens.Jwt;
 using System.Net.Http;
 using System.Text;
 
@@ -31,6 +32,16 @@ namespace MovieApp.AdminUI.Controllers
         public async Task<IActionResult> CreateMovie()
         {
             TokenHelper.AddAuthorizationHeader(_client, HttpContext);
+            var token = HttpContext.Session.GetString("AuthToken");
+            if (!string.IsNullOrEmpty(token))
+            {
+                var handler = new JwtSecurityTokenHandler();
+                var jwtToken = handler.ReadJwtToken(token);
+
+                var user = jwtToken.Claims.ToDictionary(x => x.Type, x => x.Value);
+                ViewBag.User = user["sub"];
+                Console.WriteLine(user["sub"]);
+            }
             ViewBag.Categories = await GetCategoryAsync();
             return View();
         }
@@ -39,6 +50,16 @@ namespace MovieApp.AdminUI.Controllers
         public async Task<IActionResult> CreateMovie(CreateMovieDto dto)
         {
             TokenHelper.AddAuthorizationHeader(_client, HttpContext);
+            var token = HttpContext.Session.GetString("AuthToken");
+            if (!string.IsNullOrEmpty(token))
+            {
+                var handler = new JwtSecurityTokenHandler();
+                var jwtToken = handler.ReadJwtToken(token);
+
+                var user = jwtToken.Claims.ToDictionary(x => x.Type, x => x.Value);
+                ViewBag.User = user["sub"];
+                Console.WriteLine(user["sub"]);
+            }
             ViewBag.Categories = await GetCategoryAsync();
 
             if (!ModelState.IsValid)

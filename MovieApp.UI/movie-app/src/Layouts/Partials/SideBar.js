@@ -7,9 +7,9 @@ return (
 
         <NavLink className="sidebar-brand d-flex align-items-center justify-content-center" to="/">
             <div className="sidebar-brand-icon">
-                <img src="img/logo-icon.png" alt="" />
+                <img src="/img/logo-icon.png" alt="" />
             </div>
-            <div className="sidebar-brand-text mx-3"><img src="img/logo.png" alt=""/></div>
+            <div className="sidebar-brand-text mx-3"><img src="/img/logo.png" alt=""/></div>
         </NavLink>
 
         <li className="nav-item">

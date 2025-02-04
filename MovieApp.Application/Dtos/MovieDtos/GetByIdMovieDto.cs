@@ -17,5 +17,6 @@ namespace MovieApp.Application.Dtos.MovieDtos
         public decimal? Budget { get; set; }
         public DateTime CreatedDate { get; set; }
         public string CategoryName { get; set; }
+        public string? UserId { get; set; }
     }
 }

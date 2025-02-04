@@ -1,4 +1,5 @@
-﻿using MediatR;
+﻿using FluentValidation;
+using MediatR;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
@@ -13,10 +14,14 @@ namespace MovieApp.WebApi.Controllers
     public class CommentController : ControllerBase
     {
         private readonly IMediator _mediator;
+        private readonly IValidator<CreateCommentCommand> _createValidator;
+        private readonly IValidator<UpdateCommentCommand> _updateValidator;
 
-        public CommentController(IMediator mediator)
+        public CommentController(IMediator mediator, IValidator<CreateCommentCommand> createValidator, IValidator<UpdateCommentCommand> updateValidator)
         {
             _mediator = mediator;
+            _createValidator = createValidator;
+            _updateValidator = updateValidator;
         }
 
         [HttpGet]
@@ -36,6 +41,16 @@ namespace MovieApp.WebApi.Controllers
         [HttpPost]
         public async Task<IActionResult> CreateComment(CreateCommentCommand command)
         {
+            var validationResult = await _createValidator.ValidateAsync(command);
+            if (!validationResult.IsValid)
+            {
+                var errors = new List<string>();
+                foreach (var error in validationResult.Errors)
+                {
+                    errors.Add(error.ErrorMessage);
+                }
+                return BadRequest(new { errors = errors });
+            }
             return Ok(await _mediator.Send(command));
         }
 
@@ -43,6 +58,16 @@ namespace MovieApp.WebApi.Controllers
         [HttpPut("{id}")]
         public async Task<IActionResult> UpdateMovie(UpdateCommentCommand command)
         {
+            var validationResult = await _updateValidator.ValidateAsync(command);
+            if (!validationResult.IsValid)
+            {
+                var errors = new List<string>();
+                foreach (var error in validationResult.Errors)
+                {
+                    errors.Add(error.ErrorMessage);
+                }
+                return BadRequest(new { errors = errors });
+            }
             return Ok(await _mediator.Send(command));
         }
 

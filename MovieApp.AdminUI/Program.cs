@@ -1,9 +1,15 @@
+using FluentValidation;
 using MovieApp.AdminUI.Middlewares;
+using MovieApp.Application.Dtos.RoleDtos;
+using MovieApp.Application.Validators.RoleValidators;
 
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
 builder.Services.AddControllersWithViews();
+
+builder.Services.AddScoped<IValidator<CreateRoleDto>, CreateRoleValidator>();
+builder.Services.AddScoped<IValidator<UpdateRoleDto>, UpdateRoleValidation>();
 
 builder.Services.AddDistributedMemoryCache();
 builder.Services.AddSession(options =>

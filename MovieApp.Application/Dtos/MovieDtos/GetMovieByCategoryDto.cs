@@ -13,5 +13,6 @@ namespace MovieApp.Application.Dtos.MovieDtos
         public string? ImageUrl { get; set; }
         public DateTime CreatedDate { get; set; }
         public Guid CategoryId { get; set; }
+        public string UserId { get; set; }
     }
 }

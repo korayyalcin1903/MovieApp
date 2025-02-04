@@ -30,6 +30,10 @@ namespace MovieApp.WebApi.Controllers
         [HttpPost("login")]
         public async Task<IActionResult> Login([FromBody] LoginDto dto)
         {
+            if(dto.Email == null || dto.Password == null)
+            {
+                return BadRequest("Boş geçilemez");
+            }
             var user = await _userManager.FindByEmailAsync(dto.Email);
             if (user != null)
             {

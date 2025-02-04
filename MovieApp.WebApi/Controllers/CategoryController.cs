@@ -1,4 +1,5 @@
-﻿using MediatR;
+﻿using FluentValidation;
+using MediatR;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
@@ -12,10 +13,14 @@ namespace MovieApp.WebApi.Controllers
     public class CategoryController : ControllerBase
     {
         private readonly IMediator _mediator;
+        private readonly IValidator<CreateCategoryCommand> _createValidator;
+        private readonly IValidator<UpdateCategoryCommand> _updateValidator;
 
-        public CategoryController(IMediator mediator)
+        public CategoryController(IMediator mediator, IValidator<CreateCategoryCommand> createValidator, IValidator<UpdateCategoryCommand> updateValidator)
         {
             _mediator = mediator;
+            _createValidator = createValidator;
+            _updateValidator = updateValidator;
         }
 
         [HttpGet]
@@ -35,6 +40,16 @@ namespace MovieApp.WebApi.Controllers
         [HttpPost]
         public async Task<IActionResult> CreateCategory(CreateCategoryCommand command)
         {
+            var validationResult = await _createValidator.ValidateAsync(command);
+            if (!validationResult.IsValid)
+            {
+                var errors = new List<string>();
+                foreach (var error in validationResult.Errors)
+                {
+                    errors.Add(error.ErrorMessage);
+                }
+                return BadRequest(new { errors = errors });
+            }
             return Ok(await _mediator.Send(command));
         }
 
@@ -42,6 +57,16 @@ namespace MovieApp.WebApi.Controllers
         [HttpPut("{id}")]
         public async Task<IActionResult> UpdateCategory(UpdateCategoryCommand command)
         {
+            var validationResult = await _updateValidator.ValidateAsync(command);
+            if (!validationResult.IsValid)
+            {
+                var errors = new List<string>();
+                foreach (var error in validationResult.Errors)
+                {
+                    errors.Add(error.ErrorMessage);
+                }
+                return BadRequest(new { errors = errors });
+            }
             return Ok(await _mediator.Send(command));
         }
 

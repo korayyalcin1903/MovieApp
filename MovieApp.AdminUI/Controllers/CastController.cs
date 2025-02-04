@@ -44,7 +44,7 @@ namespace CastApp.AdminUI.Controllers
             {
                 return RedirectToAction("Index");
             }
-            ModelState.AddModelError(string.Empty, "Kategori eklenirken bir hata oluştu.");
+            ModelState.AddModelError(string.Empty, "Oyuncu eklenirken bir hata oluştu.");
             return View(dto);
         }
 
@@ -78,7 +78,7 @@ namespace CastApp.AdminUI.Controllers
             {
                 return RedirectToAction("Index");
             }
-            ModelState.AddModelError(string.Empty, "Kategori güncellenirken bir hata oluştu.");
+            ModelState.AddModelError(string.Empty, "Oyuncu güncellenirken bir hata oluştu.");
             return View(dto);
         }
 

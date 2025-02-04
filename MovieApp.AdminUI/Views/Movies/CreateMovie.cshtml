@@ -53,8 +53,15 @@
                 </div>
             </div>
             <div class="col-md-6">
+                <div class="form-group has-feedback">
+                    <label class="control-label">UserId</label>
+                    <input type="text" class="form-control" asp-for="UserId" value="@ViewBag.User" placeholder="UserId" readonly>
+                </div>
+            </div>
+            <div class="col-md-6">
                 <label class="control-label">Category</label>
                 <select class="form-control" asp-for="CategoryId" name="CategoryId">
+                    <option class="my-2">Seçiniz</option>
                     @foreach(var category in ViewBag.Categories)
                     {
                         <option value="@category.Id" class="my-2">@category.CategoryName</option>
