@@ -1,16 +1,10 @@
-import React, { useEffect, useState } from 'react'
+import React, { useContext, useEffect, useState } from 'react'
 import { Link } from 'react-router'
 import MovieCard from '../MovieCard'
+import { ConstantAPIContext } from '../../context/ConstantAPIContext'
 
 const Movies = () => {
-    const [movies, setMovies] = useState([]);
-
-    useEffect(() => {
-       fetch("https://localhost:7265/api/Movie")
-            .then(response => response.json())
-            .then(data => setMovies(data))
-            .catch(err => console.log(err))
-    }, [])
+    const {movieList} = useContext(ConstantAPIContext)
 
   return (
     <>
@@ -21,8 +15,8 @@ const Movies = () => {
 
         <div className="row">
           {
-            movies.length > 0 ? (
-             movies.map((movie) => (
+            movieList.length > 0 ? (
+              movieList.map((movie) => (
               <MovieCard key={movie.id} movie={movie} />
             ))) : (<h3>Film bulunamadı</h3>) 
           }

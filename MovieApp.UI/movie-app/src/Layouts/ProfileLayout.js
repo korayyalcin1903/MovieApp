@@ -5,23 +5,21 @@ import Profile from '../Components/Profile/Profile';
 import AccountSetting from '../Components/Profile/AccountSetting';
 import WatchList from '../Components/Profile/WatchList';
 import { Link } from 'react-router';
+import StorageService from '../services/StorageService';
 
-const ProfileLayout = ({ children }) => {
+const ProfileLayout = () => {
+  var user = StorageService.getUserInfo()
   return (
     <MainLayout>
       <div className="container-fluid">
         <section className="pt-5 pb-5 bg-gradient-primary text-white pl-4 pr-4 inner-profile mb-4">
           <div className="row gutter-2 gutter-md-4 align-items-end">
             <div className="col-md-6 text-center text-md-left">
-              <h1 className="mb-1">Gurdeep Osahan</h1>
-              <span className="text-muted text-gray-500">
-                <i className="fas fa-map-marker-alt fa-fw fa-sm mr-1"></i> India, Punjab
-              </span>
-            </div>
-            <div className="col-md-6 text-center text-md-right">
-              <Link href="#" data-toggle="modal" data-target="#logoutModal" className="btn btn-light">
-                Sign out
-              </Link>
+              {
+                user && (
+                  <h1 className="mb-1">{user.FirstName.toUpperCase()} {user.LastName.toUpperCase()}</h1>
+                )
+              }
             </div>
           </div>
         </section>
@@ -30,7 +28,7 @@ const ProfileLayout = ({ children }) => {
           <div className="col-xl-9 col-lg-9">
             <div className="bg-white p-3 widget shadow rounded mb-4">
               <div className="tab-content" id="myTabContent">
-                <Profile />
+                <Profile user={user}/>
                 <WatchList />
                 <AccountSetting />
 

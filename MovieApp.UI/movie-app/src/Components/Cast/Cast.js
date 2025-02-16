@@ -1,16 +1,21 @@
-import React, { useEffect, useState } from 'react'
+import React, { useContext, useEffect, useState } from 'react'
 import MainLayout from '../../Layouts/MainLayout'
 import CastCard from './CastCard'
 import { Link } from 'react-router'
+import { ConstantAPIContext } from '../../context/ConstantAPIContext'
+import CastAPI from '../../apis/CastAPI'
 
 const Cast = () => {
   const [casts, setCasts] = useState([])
+  const {castList} = useContext(ConstantAPIContext)
 
   useEffect(() => {
-    fetch("https://localhost:7265/api/Cast")
-      .then(response => response.json())
-      .then(data => setCasts(data))
-      .catch(err => console.log(err))
+    const fetchData = async() => {
+      var response = await CastAPI.getAllCast()
+      console.log(response)
+      setCasts(response)
+    }
+    fetchData()
   },[])
 
 return (

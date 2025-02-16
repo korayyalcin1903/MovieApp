@@ -1,13 +1,17 @@
-import React, { useEffect, useState } from 'react';
+import React, { useContext, useEffect, useState } from 'react';
 import { useLocation, useNavigate } from 'react-router-dom';
 import MainLayout from '../../Layouts/MainLayout';
 import FilterSideBar from './FilterSideBar';
 import MovieCard from '../MovieCard';
+import CategoryAPI from '../../apis/CategoryAPI';
+import { ConstantAPIContext } from '../../context/ConstantAPIContext';
+import MovieAPI from '../../apis/MovieAPI';
 
 const Filter = () => {
   const [movies, setMovies] = useState([]);
   const [categories, setCategories] = useState([]);
   const [selectedCategory, setSelectedCategory] = useState(null);
+  const {movieFilterByCategory} = useContext(ConstantAPIContext)
   const location = useLocation()
   const query = new URLSearchParams(location.search).get('query');
   const navigate = useNavigate();
@@ -15,15 +19,19 @@ const Filter = () => {
   useEffect(() => {
     if (selectedCategory) { 
       console.log(selectedCategory)
-      fetch(`https://localhost:7265/api/Movie/category/${selectedCategory}`)
-        .then(response => response.json())
-        .then(data => setMovies(data))
-        .catch(err => console.log(err))
+      const fetchData = async() => {
+        var response = await CategoryAPI.categoryFilter(selectedCategory)
+        console.log(response)
+        setMovies(response)
+      }
+      fetchData()
     } else {
-      fetch("https://localhost:7265/api/Movie")
-        .then(response => response.json())
-        .then(data => setMovies(data))
-        .catch(err => console.log(err))
+      const fetchData = async() => {
+        var response = await MovieAPI.getAllMovie()
+        console.log(response)
+        setMovies(response)
+      }
+      fetchData()
     }
   }, [selectedCategory]); 
 

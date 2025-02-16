@@ -1,0 +1,17 @@
+{
+
+    "compilerOptions": {
+    "target": "ES6",  
+    "module": "ESNext",  
+    "moduleResolution": "node",  
+    "jsx": "react-jsx",  // React JSX dönüşümünü kullanıyoruz
+    "outDir": "./dist",  // Derlenen dosyaların çıkacağı dizin
+    "esModuleInterop": true,  // ES modülleriyle uyumlu
+    "strict": true,  // Tür güvenliğini aktif tutuyoruz
+    "skipLibCheck": true,  // Tip kontrolünü kütüphanelerde geçiyoruz
+    "allowJs": true,  // JavaScript dosyalarını da derlemeye dahil ediyoruz
+    "include": ["src/**/*"],  // Tüm kaynak dosyalarını dahil ediyoruz
+    "exclude": ["node_modules"]  // `node_modules` dizinini dışlıyoruz
+  }
+  }
+  

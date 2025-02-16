@@ -1,4 +1,4 @@
-import { useState, useEffect } from "react"
+import { useState, useEffect, useContext } from "react"
 import { useParams } from "react-router"
 import MainLayout from "../../Layouts/MainLayout"
 import DetailSummary from "./DetailSummary"
@@ -7,25 +7,48 @@ import DetailHeadInfo from "./DetailHeadInfo"
 import DetailCast from "./DetailCast"
 import DetailVideos from "./DetailVideos"
 import DetailReviews from "./DetailReviews"
+import { ConstantAPIContext } from "../../context/ConstantAPIContext"
+import MovieAPI from "../../apis/MovieAPI"
+import CastAPI from "../../apis/CastAPI"
 
 const DetailPage = () => {
-    const [movie, setMovie] = useState(null)
-    const [casts, setCasts] = useState([]);
+    const [movie, setMovie] = useState()
+    const [casts, setCasts] = useState([])
     const params = useParams()
+    const {movieDetayList} = useContext(ConstantAPIContext)
 
     useEffect(() => {
-           fetch("https://localhost:7265/api/Movie/" + params.id)
-                .then(response => response.json())
-                .then(data => setMovie(data))
-                .catch(err => console.log(err))
-        }, [params.id])
+        const fetchMovieDetail = async () => {
+            try {
+                if (params.id) {
+                    const movieResponse = await MovieAPI.getByIdMovie(params.id)
+                    console.log(movieResponse)
+                    setMovie(movieResponse);
+                    const castResponse = await CastAPI.getCastByMovieId(params.id)
+                    console.log(castResponse)
+                    setCasts(castResponse)
+                }
+            } catch (error) {
+                console.error("Hata oluştu:", error);
+            }
+        };
 
-    useEffect(() => {
-        fetch("https://localhost:7265/api/Cast/GetCastByMovieId/" + params.id)
-                .then(response => response.json())
-                .then(data => setCasts(data))
-                .catch(err => console.log(err))
-    }, [params.id])
+        fetchMovieDetail();
+    }, [params.id]);
+
+    // useEffect(() => {
+    //        fetch("https://localhost:7265/api/Movie/" + params.id)
+    //             .then(response => response.json())
+    //             .then(data => setMovie(data))
+    //             .catch(err => console.log(err))
+    //     }, [params.id])
+
+    // useEffect(() => {
+    //     fetch("https://localhost:7265/api/Cast/GetCastByMovieId/" + params.id)
+    //             .then(response => response.json())
+    //             .then(data => setCasts(data))
+    //             .catch(err => console.log(err))
+    // }, [params.id])
 
   return (
     <>
